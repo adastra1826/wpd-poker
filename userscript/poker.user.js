@@ -3,10 +3,10 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.4
+// @version      1.1.0
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
-// @grant        none
+// @grant        unsafeWindow
 // @require
 // @include      *
 // @match        https://watchpeopledie.tv/casino/poker/*
@@ -17,6 +17,28 @@
 
 (function() {
     'use strict';
+
+    // Runs automatically on page load
+    // Inject unsafeWindow script
+    (function() {
+        const s = document.createElement("script");
+        s.textContent = `
+            window._wpd_auto = {
+                check: () => check(),
+                call: () => call(),
+                fold: () => fold(),
+                raiseTo: (amt) => {
+                    document.querySelector("#raise-amount").value = amt;
+                    raise();
+                },
+                start: () => startGame(),
+                ready: () => ready(true)
+            };
+        `;
+        document.documentElement.appendChild(s);
+    })();
+    console.log("Injected non-sandboxed script for proxy function calling");
+
 
     function getGameState() {
         return document.getElementById("poker-table").getAttribute("data-state");
@@ -47,7 +69,7 @@
         console.log("Removed poker help icon/Wikipedia link");
 
         // test
-        check();
+        unsafeWindow._wpd_auto.check();
         console.log("Checked");
     }
 
