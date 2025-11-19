@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.1.1
+// @version      1.1.2
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        unsafeWindow
@@ -53,6 +53,8 @@
     // Inject unsafeWindow script
     (function() {
         const s = document.createElement("script");
+        // v1
+        /*
         s.textContent = `
             window._wpd_auto = {
                 test: () => console.log("Test OK"),
@@ -69,6 +71,34 @@
 
             console.log("Injected non-sandboxed script for proxy function calling");
         `;
+        */
+        // v2
+        (function() {
+            const s = document.createElement("script");
+            s.textContent = `
+                Object.defineProperty(window, "_wpd_auto", {
+                    value: {
+                        test: () => console.log("Test OK"),
+                        check: () => check(),
+                        call: () => call(),
+                        fold: () => fold(),
+                        raiseTo: (amt) => {
+                            document.querySelector("#raise-amount").value = amt;
+                            raise();
+                        },
+                        start: () => startGame(),
+                        ready: () => ready(true)
+                    },
+                    writable: false,
+                    configurable: false,
+                    enumerable: false
+                });
+
+                console.log("Injected non-sandboxed script for proxy function calling");
+            `;
+            document.documentElement.appendChild(s);
+        })();
+        
         document.documentElement.appendChild(s);
     })();
 
