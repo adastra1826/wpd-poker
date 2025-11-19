@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.3
+// @version      1.0.4
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -47,9 +47,8 @@
         console.log("Removed poker help icon/Wikipedia link");
 
         // test
-        pokerSocket.emit("move", {
-            type: "check"
-        });
+        check();
+        console.log("Checked");
     }
 
     setInitialGameState();
