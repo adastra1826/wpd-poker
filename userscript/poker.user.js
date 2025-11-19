@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.1
+// @version      1.0.2
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -25,7 +25,7 @@
     function parseGameState() {
         const gameState = getGameState();
         const gameStateObj = JSON.parse(gameState);
-        console.log(gameState);
+        console.log(gameStateObj);
     }
 
     const observer = new MutationObserver(function(mutations) {
@@ -40,4 +40,11 @@
         childList: true,
         subtree: true,
     });
+
+    function setInitialGameState() {
+        // Delete useless Wikipedia link
+        document.getElementById("poker-help-icon").remove();
+    }
+
+    setInitialGameState();
 })();
