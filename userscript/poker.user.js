@@ -3,15 +3,13 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.0.0
+// @version      1.0.1
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
 // @require
 // @include      *
 // @match        https://watchpeopledie.tv/casino/poker/*
-// @exclude      *
-// @connect      *
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
 // @updateURL    https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
