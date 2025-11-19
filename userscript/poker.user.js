@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.0
+// @version      1.2.1
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        unsafeWindow
@@ -48,7 +48,14 @@
   }
 
   function unhideButtons() {
-    document.getElementById("poker-buttons").removeAttribute("hidden");
+    document.getElementById("poker-CHECK").removeAttribute("hidden");
+    document.getElementById("poker-RAISE").removeAttribute("hidden");
+    document.getElementById("poker-FOLD").removeAttribute("hidden");
+    document.getElementById("poker-STARTGAME").removeAttribute("hidden");
+    document.getElementById("poker-UNREADY").removeAttribute("hidden");
+    document.getElementById("poker-SHOWHAND").removeAttribute("hidden");
+    document.getElementById("poker-LEAVE").removeAttribute("hidden");
+
     console.log("Unhidden poker buttons");
   }
 
