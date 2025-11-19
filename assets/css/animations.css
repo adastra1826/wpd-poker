@@ -1,0 +1,72 @@
+/* desktop dropdown expanding */
+@keyframes expand
+{
+	0% { opacity: 0.0; transform: scaleY(0.7); }
+	100% { opacity: 1.0; transform: scaleY(1.0); }
+}
+
+.dropdown-menu-right.show
+{
+	transform-origin: top;
+	animation: expand .20s 1;
+}
+
+/* arrow bouncing */
+.arrow-up.active-anim
+{
+	animation: bounce-top .7s 1 0s;
+	-webkit-animation: bounce-top .7s 1 0s;
+}
+
+.arrow-down.active-anim
+{
+	animation: bounce-bot .7s 1 0s;
+	-webkit-animation: bounce-bot .7s 1 0s;
+}
+
+@keyframes bounce-top {
+	20% {
+		transform: translateY(-9px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	52% {
+		transform: translateY(-6px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	69% {
+		transform: translateY(-3px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	35%,
+	63%,
+	79%,
+	100% {
+		transform: translateY(0px);
+		animation-timing-function: ease-out;
+	}
+}
+
+@keyframes bounce-bot {
+	30% {
+		transform: translateY(6px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	52% {
+		transform: translateY(3px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	69% {
+		transform: translateY(2px);
+		animation-timing-function: ease-in;
+		opacity: 1;
+	}
+	100% {
+		transform: translateY(0px);
+		animation-timing-function: ease-out;
+	}
+}

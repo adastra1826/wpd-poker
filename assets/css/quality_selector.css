@@ -1,0 +1,46 @@
+.resizable {
+	position: relative;
+	display: inline-block;
+}
+
+video {
+	width: 100%;
+	height: auto;
+}
+
+.qualitySelector {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background: none;
+	color: white;
+	border: none;
+	padding: 0 2px 2px 2px !important;
+	font-size: 12px;
+	cursor: pointer;
+	z-index: 10;
+	opacity: 0;
+	transition: opacity 0.3s;
+    background: #0000008c;
+    border-radius: 0 0 0 0.35rem;
+}
+.qualitySelector > option {
+	background: black;
+}
+
+.resizable.show-controls .qualitySelector {
+	opacity: 1;
+}
+
+@media (min-width: 768px) {
+	.qualitySelector {
+		right: 5%;
+	}
+	.resizable:hover .qualitySelector {
+		opacity: 1;
+	}
+}
+
+.qualitySelector:focus {
+    opacity: 1;
+}

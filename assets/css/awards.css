@@ -1,0 +1,466 @@
+/*generic*/
+
+#awards-container {
+	position: absolute;
+	overflow: hidden;
+	pointer-events: none;
+	z-index: 1029;
+}
+
+.stackable-container > div {
+	position: absolute;
+}
+
+.stackable-container div, .stackable-container img, .ricardo {
+	animation-iteration-count: infinite !important;
+	animation-timing-function: linear !important;
+}
+
+
+/*emoji*/
+
+.emoji-award img, .emoji-hz-award img {
+	width: min(60px, 13vw) !important;
+	height: min(90px, 19.5vw) !important;
+	object-fit: contain;
+}
+
+.emoji-award:nth-child(even) {
+	animation-direction: alternate-reverse;
+}
+
+.emoji-award:nth-child(2) img, .emoji-award:nth-child(3) img, .emoji-award:nth-child(6) img, .emoji-award:nth-child(7) img, .emoji-award:nth-child(10) img, .emoji-award:nth-child(11) img, .emoji-award:nth-child(14) img, .emoji-award:nth-child(15) img, .emoji-award:nth-child(18) img, .emoji-award:nth-child(19) img {
+	animation-direction: alternate-reverse;
+}
+
+@keyframes emojiX {
+	100% {
+		transform: translateX(98vw);
+	}
+}
+@keyframes emojiY {
+	100% {
+		transform: translateY(80vh);
+	}
+}
+
+.emoji-award {
+	animation: emojiX 8s alternate;
+}
+.emoji-award img {
+	animation: emojiY 9s alternate;
+}
+
+@media (max-width: 768px) {
+	.emoji-award {
+		animation: emojiX 6s alternate;
+	}
+	.emoji-award img {
+		animation: emojiY 7s alternate;
+	}
+}
+
+.emoji-hz-award:nth-child(even) {
+	animation-direction: reverse;
+}
+.emoji-hz-award:nth-child(even) img {
+	transform: scaleX(-1) !important;
+}
+.emoji-hz-award:nth-child(even) img.reversed {
+	transform: scaleX(1) !important;
+}
+.emoji-hz-award:nth-child(1), .emoji-hz-award:nth-child(5), .emoji-hz-award:nth-child(9), .emoji-hz-award:nth-child(13), .emoji-hz-award:nth-child(17) {
+	top: 2%;
+}
+.emoji-hz-award:nth-child(2), .emoji-hz-award:nth-child(6), .emoji-hz-award:nth-child(10), .emoji-hz-award:nth-child(14), .emoji-hz-award:nth-child(18) {
+	top: 27%;
+}
+.emoji-hz-award:nth-child(3), .emoji-hz-award:nth-child(7), .emoji-hz-award:nth-child(11), .emoji-hz-award:nth-child(15), .emoji-hz-award:nth-child(19) {
+	top: 52%;
+}
+.emoji-hz-award:nth-child(4), .emoji-hz-award:nth-child(8), .emoji-hz-award:nth-child(12), .emoji-hz-award:nth-child(16), .emoji-hz-award:nth-child(20) {
+	top: 77%;
+}
+
+
+@keyframes emoji-hz {
+	100% {
+		transform: translateX(110vw);
+	}
+}
+
+.emoji-hz-award {
+	animation: emoji-hz 12s;
+}
+
+@media (max-width: 768px) {
+	.emoji-hz-award {
+		animation: emoji-hz 6s;
+		left: -4%
+	}
+}
+
+.animation-delay-1 {
+	animation-delay: 1s !important;
+}
+.animation-delay-2 {
+	animation-delay: 2s !important;
+}
+.animation-delay-3 {
+	animation-delay: 3s !important;
+}
+.animation-delay-4 {
+	animation-delay: 4s !important;
+}
+
+.emoji-award, .emoji-hz-award {
+	transform: translateX(-10vw);
+}
+
+.emoji-hz-award img.reversed {
+	transform: scaleX(-1);
+}
+
+/*confetti*/
+.confetti {
+	background-image: url(/i/confetti2.webp);
+	background-repeat: repeat;
+	position: absolute;
+	pointer-events: none;
+}
+
+/*fireworks*/
+.firework img {
+	max-width: min(25vw,15rem);
+}
+
+/*ricardo*/
+.ricardo {
+	position: absolute !important;
+	overflow: hidden !important;
+	bottom: 0;
+	pointer-events: none;
+}
+.furry-award {
+	bottom: 100px;
+	animation-direction: reverse !important;
+}
+.ricardo img {
+	max-height: min(20vw,100px);
+}
+.furry-award img {
+	max-height: min(25vw,125px);
+}
+
+.comments-awards-container .firework img {
+	max-width: min(12.5vw,7.5rem);
+}
+.comments-awards-container .ricardo img {
+	max-height: min(10vw,50px);
+}
+.comments-awards-container .furry-award img {
+	max-height: min(12.5vw,62.5px);
+}
+.comments-awards-container .furry-award {
+	bottom: 0
+}
+
+.ricardo1 {animation: ricardo1Xa 5.8s, ricardo1Xb 11.6s, ricardo1Y 23.2s;}
+.ricardo2 {animation: ricardo2 8.5s;}
+.ricardo3 {animation: ricardo3 10s;}
+
+@keyframes ricardo1Xa {
+	0% {right: -200px}
+	50% {right: 200px}
+	100% {right: -200px}
+}
+
+@keyframes ricardo1Xb {
+	0%{left: unset}
+	49% {left: unset}
+	50% {left: -200px}
+	75% {left: 200px}
+	100% {left: -200px}
+}
+
+@keyframes ricardo1Y {
+	0% {bottom: 20%}
+	24% {bottom: 20%}
+	25% {bottom: 60%}
+	49% {bottom: 60%}
+	50% {bottom: 10%}
+	74% {bottom: 10%}
+	75% {bottom: 50%}
+	99% {bottom: 50%}
+	100% {bottom: 20%}
+}
+
+
+@keyframes ricardo2 {
+	0% { opacity: 1; left: 0; right: unset;}
+	18% {opacity: 0; left: 0; right: unset;}
+	19% {opacity: 0; left: unset; right: 20vw;}
+	20% {opacity: 1; left: unset; right: 20vw;}
+	38% {opacity: 0; left: unset; right: 20vw;}
+	39% {opacity: 0; left: 20vw; right: unset;}
+	40% {opacity: 1; left: 20vw; right: unset;}
+	58% {opacity: 0; left: 20vw; right: unset;}
+	59% {opacity: 0; left: unset;right: 60vw;}
+	60% {opacity: 1; left: unset; right: 60vw;}
+	78% {opacity: 0; left: unset; right: 60vw;}
+	79% {opacity: 0; left: 80vw; right: unset;}
+	80% {opacity: 1; left: 80vw; right: unset;}
+	98% {opacity: 0; left: 80vw; right: unset;}
+	99% {opacity: 0; left: 0; right: unset;}
+	100% {opacity: 1; left: 0; right: unset;}
+}
+
+@keyframes ricardo3 {
+	50% {transform: translateX(100vw); top: unset; bottom: 0;}
+	51% {transform: translateX(100vw) rotate(180deg); top: 0; bottom: unset;}
+	100% {transform: translateX(-15vw) rotate(180deg); top: 0; bottom: unset;}
+}
+
+.rainbow-text:not(a), h1.rainbow-text.post-title a {
+	background: repeating-linear-gradient(
+		135deg,
+		violet,
+		#b25eee 20px,
+		lightblue 40px,
+		green 60px,
+		yellow 80px,
+		orange 100px,
+		#ff7f7f 120px
+	);
+	color: transparent !important;
+	font-weight: 700 !important;
+	background-clip: text !important;
+	-webkit-background-clip: text !important;
+	animation: 60s linear 0s infinite move-colors;
+}
+
+.queen:not(a) img, .queen:not(.ectoplasm), h1.queen.post-title a {
+	color: hotpink !important;
+	font-weight: 700 !important;
+	text-transform: lowercase;
+}
+
+.sharpen:not(a):not(.blood):not(.author-bitten), h1.sharpen.post-title:not(.author-bitten) a {
+	color: red !important;
+}
+
+.sharpen:not(a):not(.blood), h1.sharpen.post-title a {
+	font-weight: bold !important;
+	font-style: italic !important;
+}
+
+.sharpen blockquote, .sharpen g {
+	font-style: normal
+}
+
+.sharpen-0:after {
+	background: url("/i/sharpen/0.webp?x=53");
+}
+.sharpen-1:after {
+	background: url("/i/sharpen/1.webp?x=53");
+}
+.sharpen-2:after {
+	background: url("/i/sharpen/2.webp?x=53");
+}
+.sharpen-3:after {
+	background: url("/i/sharpen/3.webp?x=53");
+}
+.sharpen-4:after {
+	background: url("/i/sharpen/4.webp?x=53");
+}
+.sharpen-5:after {
+	background: url("/i/sharpen/5.webp?x=53");
+}
+.sharpen-6:after {
+	background: url("/i/sharpen/6.webp?x=53");
+}
+.sharpen-7:after {
+	background: url("/i/sharpen/7.webp?x=53");
+}
+.sharpen-8:after {
+	background: url("/i/sharpen/8.webp?x=53");
+}
+.sharpen-9:after {
+	background: url("/i/sharpen/9.webp?x=53");
+}
+
+.rainbow-text:not(a) > p, .gold-text:not(a) > p {
+	color: transparent !important;
+}
+
+.rainbow-text del, .gold-text del {
+	color: var(--black);
+	font-weight: 400;
+}
+
+@keyframes move-colors {
+	from {background-position: 0px;}
+	to {background-position: 1000px;}
+}
+
+@keyframes lgbt {
+	0% { filter: hue-rotate(0deg); }
+	100% { filter: hue-rotate(360deg); }
+}
+
+.zozbot, [pride_username], :not(td) > a[href="/h/countryclub" i]:not(.hole-flair), .pride, .wpl-external, #button-challenge-battle, #button-challenge-battle2, .text-rainbow {
+	color: red;
+	animation: lgbt 3s linear infinite;
+}
+
+[pride_username].patron, :not(td) > a[href="/h/countryclub" i].hole-flair, .go-wpl {
+	background-color: red;
+	animation: lgbt 2s linear infinite;
+}
+
+.zozbot, .text-rainbow {
+	color: red !important;
+}
+
+.sharpen img {
+	filter: invert(30%) brightness(60%) sepia(100%) hue-rotate(-50deg) contrast(2) saturate(150%);
+}
+
+:not(td) > a[href="/h/transgender"], .valid {
+	-webkit-text-fill-color: transparent;
+	background: repeating-linear-gradient(45deg, rgba(221, 147, 181, 1) 0%, rgba(199, 151, 188, 1) 10%, rgba(176, 156, 196, 1) 20%, rgba(153, 161, 204, 1) 30%, rgba(132, 165, 211, 1) 40%, rgba(0, 191, 255, 1) 50%, rgba(132, 165, 211, 1) 60%, rgba(153, 161, 204, 1) 70%, rgba(176, 156, 196, 1) 80%, rgba(199, 151, 188, 1) 90%);
+	background-repeat: repeat;
+	-webkit-background-clip: text !important;
+	background-clip: text !important;
+	animation: 60s linear 0s infinite move-colors;
+}
+
+.author-bitten.fa-badge-check {
+	color: #a5a5a5 !important;
+}
+
+.glow, .glow * {
+	text-shadow: 1px 1px 1px lightgreen, 0 0 1px green;
+}
+
+.comment-emoji-award img {
+	width: 40px !important;
+	height: 40px !important;
+	object-fit: contain;
+}
+
+
+
+/* truthnuke and wand */
+
+.truthnuke, .wand {
+	position: relative;
+	z-index: 1;
+}
+
+.truthnuke::before, .wand::before {
+	content: "";
+	position: absolute;
+	top: 0; 
+	width: 100%; 
+	height: 100%;  
+	background-repeat: no-repeat;
+	pointer-events: none;
+}
+
+.wand::before {
+	z-index: 1;
+	opacity: 0.9;
+	background-position: top;
+	background-size: 100% auto;
+}
+
+@media (min-width: 768px) { /* keep it here so it overrides background-size */
+	.comment-text.wand::before {
+		background-size: initial;
+	}
+}
+
+.truthnuke::before { /* keep it here so it overrides wand opacity */
+	z-index: -1;
+	opacity: 0.3;
+	background-position: center; /* top doesnt work if the comment is only one line */
+	background-image: url("/i/animations/truthnuke.webp?x=53");
+}
+
+
+.wand-1::before {
+	background-image: url("/i/animations/wand-1.webp?x=53");
+}
+.wand-2::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53");
+}
+.wand-3::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53"), url("/i/animations/wand-3.gif?x=53");
+}
+.wand-4::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53"), url("/i/animations/wand-3.gif?x=53"), url("/i/animations/wand-4.webp?x=53");
+}
+
+.truthnuke.wand {
+	background-position: top;
+}
+.truthnuke.wand-1::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/truthnuke.webp?x=53");
+}
+.truthnuke.wand-2::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53"), url("/i/animations/truthnuke.webp?x=53");
+}
+.truthnuke.wand-3::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53"), url("/i/animations/wand-3.gif?x=53"), url("/i/animations/truthnuke.webp?x=53");
+}
+.truthnuke.wand-4::before {
+	background-image: url("/i/animations/wand-1.webp?x=53"), url("/i/animations/wand-2.gif?x=53"), url("/i/animations/wand-3.gif?x=53"), url("/i/animations/wand-4.webp?x=53"), url("/i/animations/truthnuke.webp?x=53");
+}
+
+@font-face {
+	font-family: 'COLRv1-sbix';
+	src: url(/assets/fonts/COLRv1-sbix.woff2?colr=1) format("woff2");
+	text-rendering: optimizeLegibility;
+}
+
+@font-face {
+	font-family: "blank";
+	src: url(/assets/fonts/blank.woff2?x=53) format("woff2");
+}
+
+.hieroglyphed, .hieroglyphed * {
+	font-family: 'COLRv1-sbix', "blank";
+	font-size: 40px !important;
+}
+
+.hieroglyphed h1, .hieroglyphed h2, .hieroglyphed h3, .hieroglyphed h4, .hieroglyphed h5, .hieroglyphed h6 {
+	font-size: 50px !important;
+}
+
+.hieroglyphed a:not(#post-url) {
+	background: var(--primary);
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.hieroglyphed a:not(#post-url):hover {
+	filter: hue-rotate(90deg);
+}
+
+@media (max-width: 768px) {
+	.hieroglyphed, .hieroglyphed * {
+		font-size: 25px !important;
+	}
+	.hieroglyphed h1, .hieroglyphed h2, .hieroglyphed h3, .hieroglyphed h4, .hieroglyphed h5, .hieroglyphed h6 {
+		font-size: 31px !important;
+	}
+}
+
+/* Firefox-only CSS */
+@-moz-document url-prefix() {
+	.hieroglyphed, .hieroglyphed * {
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+		font-size: initial !important;
+	}
+}

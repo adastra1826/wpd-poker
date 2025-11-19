@@ -1,0 +1,12 @@
+#settingsModal input:invalid {
+	border-color: red;
+}
+
+@media (max-width: 768px) {
+	#pokerRoomSettingsModal {
+		max-width: 100%;
+	}
+	#pokerRoomSettingsModal * {
+		font-size: 12px !important;
+	}
+}
