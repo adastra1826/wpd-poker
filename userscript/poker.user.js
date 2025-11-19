@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.1.3
+// @version      1.2.0
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        unsafeWindow
@@ -43,59 +43,14 @@
     // Delete useless Wikipedia link
     document.getElementById("poker-help-icon").remove();
     console.log("Removed poker help icon/Wikipedia link");
+    unhideButtons();
 
-    // test
-    unsafeWindow._wpd_auto.check();
-    console.log("Checked");
   }
 
-  // Inject unsafeWindow script
-  window.addEventListener("DOMContentLoaded", () => {
-    const s = document.createElement("script");
-    // v1
-    /*
-    s.textContent = `
-        window._wpd_auto = {
-            test: () => console.log("Test OK"),
-            check: () => check(),
-            call: () => call(),
-            fold: () => fold(),
-            raiseTo: (amt) => {
-                document.querySelector("#raise-amount").value = amt;
-                raise();
-            },
-            start: () => startGame(),
-            ready: () => ready(true)
-        };
-
-        console.log("Injected non-sandboxed script for proxy function calling");
-    `;
-    */
-    // v2
-    s.textContent = `
-        Object.defineProperty(window, "_wpd_auto", {
-            value: {
-                test: () => console.log("Test OK"),
-                check: () => check(),
-                call: () => call(),
-                fold: () => fold(),
-                raiseTo: (amt) => {
-                    document.querySelector("#raise-amount").value = amt;
-                    raise();
-                },
-                start: () => startGame(),
-                ready: () => ready(true)
-            },
-            writable: false,
-            configurable: false,
-            enumerable: false
-        });
-
-        console.log("Injected non-sandboxed script for proxy function calling");
-    `;
-
-    document.documentElement.appendChild(s);
-  })();
+  function unhideButtons() {
+    document.getElementById("poker-buttons").removeAttribute("hidden");
+    console.log("Unhidden poker buttons");
+  }
 
   setInitialGameState();
 })();
