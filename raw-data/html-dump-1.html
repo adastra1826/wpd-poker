@@ -1,0 +1,388 @@
+<div id="orgy-col" class="col text-left px-md-2 mr-3">
+  <div style="display: flex; align-items: center; gap: 10px; min-height: 45px">
+    <button
+      id="showSettings"
+      class="ml-2"
+      type="button"
+      data-bs-toggle="modal"
+      data-bs-target="#settingsModal"
+    >
+      <i class="fas fa-cog text-muted"></i>
+    </button>
+    <button id="toggle_music_btn" class="ml-2" type="button">
+      <i class="fas fa-music text-muted"></i>
+    </button>
+    <button id="toggle_sfx_btn" class="ml-2" type="button">
+      <i class="fas fa-volume-slash text-danger"></i>
+    </button>
+    <a
+      id="poker-help-icon"
+      class="ml-2"
+      target="_blank"
+      href="https://en.wikipedia.org/wiki/List_of_poker_hands#Hand-ranking_categories"
+      title="Poker Hand Rankings"
+    >
+      <i class="fas fa-question-circle text-muted"></i>
+    </a>
+
+    <div id="currencySelect" class="col">
+      <div class="hr-title">
+        <h5>Currency</h5>
+        <hr />
+      </div>
+      <div class="btn-group text-small-sm">
+        <span class="unbreakable mr-3">
+          <input
+            type="radio"
+            class="btn-check"
+            name="wagerCurrency"
+            autocomplete="off"
+            id="wagerCoins"
+            value="coins"
+            checked=""
+          />
+          <label for="wagerCoins" class="btn border-0 px-0">
+            <img
+              id="wagerCoinsImg"
+              loading="lazy"
+              src="https://i.watchpeopledie.tv/i/coins.webp?x=48"
+              alt="coin"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              aria-label="Coin"
+              data-bs-original-title="Coin"
+            />
+          </label>
+          <span id="user-coins-amount-casino">22,550</span>
+        </span>
+
+        <span class="unbreakable">
+          <input
+            type="radio"
+            class="btn-check"
+            name="wagerCurrency"
+            autocomplete="off"
+            id="wagerMarseybux"
+            value="marseybux"
+          />
+          <label for="wagerMarseybux" class="btn border-0 px-0">
+            <img
+              id="wagerMarseybuxImg"
+              loading="lazy"
+              src="https://i.watchpeopledie.tv/i/marseybux.webp?x=48"
+              alt="marseybux"
+              data-bs-toggle="tooltip"
+              data-bs-placement="bottom"
+              aria-label="Marseybux"
+              data-bs-original-title="Marseybux"
+            />
+          </label>
+          <span id="user-bux-amount-casino">0</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    style="
+      --poker-table-bg: url('https://i.watchpeopledie.tv/i/poker_tables/gold.webp');
+    "
+  >
+    <div id="poker-room">
+      <div id="poker-buttons">
+        <button id="poker-POST" class="btn btn-primary poker-btn" hidden="">
+          Post Bring-in (<span class="chips">0</span>)</button
+        ><button id="poker-CHECK" class="btn btn-primary poker-btn" hidden="">
+          Check</button
+        ><button id="poker-RAISE" class="btn btn-primary poker-btn" hidden="">
+          Raise</button
+        ><button id="poker-FOLD" class="btn btn-primary poker-btn" hidden="">
+          Fold</button
+        ><button
+          id="poker-STARTGAME"
+          class="btn btn-primary poker-btn"
+          hidden=""
+        >
+          Start Game</button
+        ><button id="poker-UNREADY" class="btn btn-primary poker-btn" hidden="">
+          Unready</button
+        ><button
+          id="poker-SHOWHAND"
+          class="btn btn-primary poker-btn"
+          hidden=""
+        >
+          Show Hand</button
+        ><button
+          id="poker-LEAVE"
+          class="btn btn-primary poker-btn btn-danger"
+          hidden=""
+        >
+          Leave
+        </button>
+      </div>
+      <div id="raise-menu" hidden="">
+        <input type="range" id="raise-slider" min="23" max="87" />
+        <div id="raise-preset-buttons">
+          <button class="btn btn-primary">
+            Min (<span class="chips">23</span>)</button
+          ><button class="btn btn-primary" disabled="">
+            1/4 Pot (<span class="chips">16</span>)</button
+          ><button class="btn btn-primary">
+            1/2 Pot (<span class="chips">33</span>)</button
+          ><button class="btn btn-primary">
+            3/4 Pot (<span class="chips">50</span>)</button
+          ><button class="btn btn-primary">
+            Pot (<span class="chips">67</span>)</button
+          ><button class="btn btn-primary">
+            Max (<span class="chips">87</span>)
+          </button>
+        </div>
+        <input
+          type="number"
+          id="raise-amount"
+          class="form-control d-inline"
+          min="23"
+          max="87"
+          step="1"
+          autocomplete="off"
+          placeholder="Chips"
+          required=""
+        /><button id="raise-button" class="btn btn-primary">Raise</button>
+      </div>
+      <div
+        id="poker-table"
+        data-state='{"pot_total":44,"pots":[6],"board":[],"board_dimmed":[],"id":71079,"host":2692682,"dealer":71079,"in_game":true,"moving_player":321882,"actions":[],"call_amount":10,"min_raise":23,"pot_raise":67,"max_raise":87,"max_raise_is_all_in":false,"move_timer":1763528026.6874957,"players":{"0":{"id":2692682,"result":null,"ready":true,"blind":0,"chips":1242,"payoff":-4,"cards":["??","??"],"dimmed":[false,false],"best_hand":null,"action":{"player":2692682,"type":"call"},"online":true,"show_hand":false,"user_id":2692682,"username":"James-Doakes","hat":"https://i.watchpeopledie.tv/i/hats/Roulette.webp","namecolor":"ffffff","patron":true,"pride_username":false},"2":{"id":71079,"result":null,"ready":true,"blind":0,"chips":96,"payoff":-4,"cards":["6d","2c"],"dimmed":[false,false],"best_hand":null,"action":{"player":71079,"type":"call"},"online":true,"show_hand":false,"user_id":71079,"username":"UnbelievableBro","hat":"","namecolor":"30409f","patron":false,"pride_username":false},"3":{"id":303271,"result":null,"ready":true,"blind":2,"chips":91,"payoff":-4,"cards":["??","??"],"dimmed":[false,false],"best_hand":null,"action":{"player":303271,"type":"call"},"online":true,"show_hand":false,"user_id":303271,"username":"turhkronga","hat":"https://i.watchpeopledie.tv/i/hats/Certified Ball Kicker.webp","namecolor":"f39731","patron":true,"pride_username":false},"6":{"id":4206447,"result":null,"ready":true,"blind":3,"chips":74,"payoff":-14,"cards":["??","??"],"dimmed":[false,false],"best_hand":null,"action":{"player":4206447,"amount":13,"type":"raise"},"online":true,"show_hand":false,"user_id":4206447,"username":"Snappike","hat":"https://i.watchpeopledie.tv/i/hats/DBZ Cell.webp","namecolor":"38a169","patron":true,"pride_username":false},"9":{"id":1967058,"result":null,"ready":true,"blind":0,"chips":74,"payoff":-14,"cards":["??","??"],"dimmed":[false,false],"best_hand":null,"action":{"player":1967058,"type":"call"},"online":true,"show_hand":false,"user_id":1967058,"username":"LittleCranberrBeeBoy","hat":"https://i.watchpeopledie.tv/i/hats/Little Bee.webp","namecolor":"ffff00","patron":true,"pride_username":false},"10":{"id":321882,"result":null,"ready":true,"blind":0,"chips":84,"payoff":-4,"cards":["??","??"],"dimmed":[false,false],"best_hand":null,"action":{"player":321882,"type":"call"},"online":true,"show_hand":false,"user_id":321882,"username":"Mapi","hat":"","namecolor":"ff0000","patron":false,"pride_username":false}},"currency":"coins","coins":22550}'
+      >
+        <div id="poker-table-center">
+          <div id="move-timer" class="mb-2"><span>17</span></div>
+          <div id="poker-board" hidden=""></div>
+          <div id="pots">
+            <div class="pot" id="pot-total"><span class="chips">44</span></div>
+          </div>
+        </div>
+        <div id="poker-players">
+          <div class="poker-player seat-0">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #ffffff"
+                href="/@James-Doakes"
+                ><i class="ml-1 fas fa-crown" style="color: gold"></i>
+                <div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/2692682" /><img
+                    class="profile-pic-20-hat hat"
+                    loading="lazy"
+                    src="https://i.watchpeopledie.tv/i/hats/Roulette.webp"
+                  />
+                </div>
+                <span class="ml-1 patron" style="background-color: #ffffff"
+                  >James-Doakes</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">1,242</span>
+              </div>
+              <div class="poker-player-blind">No Blind</div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__CALL">Call</div>
+          </div>
+          <div class="poker-player seat-2 dealer">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #30409f"
+                href="/@UnbelievableBro"
+                ><div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/71079" />
+                </div>
+                <span class="ml-1">UnbelievableBro</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">96</span>
+              </div>
+              <div class="poker-player-blind">No Blind</div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card_red">
+                <div class="playing-card_large">6</div>
+                <div class="playing-card_large">♦️</div>
+              </div>
+              <div class="playing-card playing-card_black">
+                <div class="playing-card_large">2</div>
+                <div class="playing-card_large">♣️</div>
+              </div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__CALL">Call</div>
+          </div>
+          <div class="poker-player seat-3">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #f39731"
+                href="/@turhkronga"
+                ><div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/303271" /><img
+                    class="profile-pic-20-hat hat"
+                    loading="lazy"
+                    src="https://i.watchpeopledie.tv/i/hats/Certified Ball Kicker.webp"
+                  />
+                </div>
+                <span class="ml-1 patron" style="background-color: #f39731"
+                  >turhkronga</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">91</span>
+              </div>
+              <div class="poker-player-blind">
+                Blind: <span class="chips">2</span>
+              </div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__CALL">Call</div>
+          </div>
+          <div class="poker-player seat-6">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #38a169"
+                href="/@Snappike"
+                ><div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/4206447" /><img
+                    class="profile-pic-20-hat hat"
+                    loading="lazy"
+                    src="https://i.watchpeopledie.tv/i/hats/DBZ Cell.webp"
+                  />
+                </div>
+                <span class="ml-1 patron" style="background-color: #38a169"
+                  >Snappike</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">74</span>
+              </div>
+              <div class="poker-player-blind">
+                Blind: <span class="chips">3</span>
+              </div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__RAISE">
+              Raise to <span class="chips">13</span>
+            </div>
+          </div>
+          <div class="poker-player seat-9">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #ffff00"
+                href="/@LittleCranberrBeeBoy"
+                ><div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/1967058" /><img
+                    class="profile-pic-20-hat hat"
+                    loading="lazy"
+                    src="https://i.watchpeopledie.tv/i/hats/Little Bee.webp"
+                  />
+                </div>
+                <span class="ml-1 patron" style="background-color: #ffff00"
+                  >LittleCranberrBeeBoy</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">74</span>
+              </div>
+              <div class="poker-player-blind">No Blind</div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__CALL">Call</div>
+          </div>
+          <div class="poker-player seat-10 poker-player-moving">
+            <div class="poker-player-info">
+              <a
+                class="poker-player-name font-weight-bold"
+                target="_blank"
+                style="color: #ff0000"
+                href="/@Mapi"
+                ><div class="avatar ml-1 profile-pic-20-wrapper">
+                  <img loading="lazy" src="/pp/321882" />
+                </div>
+                <span class="ml-1">Mapi</span
+                ><i
+                  class="poker-player-online ml-1 text-success fas fa-circle"
+                ></i
+              ></a>
+              <div class="poker-player-money">
+                <span class="chips">84</span>
+              </div>
+              <div class="poker-player-blind">No Blind</div>
+            </div>
+            <div class="moving-marker"></div>
+            <div class="poker-player-hand">
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="playing-card playing-card-face-down"></div>
+              <div class="poker-player-buttons"></div>
+            </div>
+            <div class="poker-player-move poker-player-move__null"></div>
+            <div class="poker-player-move poker-player-move__CALL">Call</div>
+          </div>
+        </div>
+      </div>
+      <img
+        id="allin-image"
+        src="https://i.watchpeopledie.tv/i/allin.webp"
+        class=""
+      />
+    </div>
+    <input id="poker_id" hidden="" value="601" />
+  </div>
+
+  <audio
+    id="poker_music"
+    preload="none"
+    hidden=""
+    src="/assets/poker_music/45-191s.mp3"
+    data-start_time="1763527879.3115869"
+  ></audio>
+</div>
