@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.4
+// @version      1.2.5
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -75,10 +75,10 @@
     parentDiv.insertBefore(customButtonsDiv, defaultButtons);
 
     // Style the new div
-    parentDiv.style.display = "flex";
-    parentDiv.style.flexDirection = "column";
-    parentDiv.style.gap = "10px";
-    parentDiv.innerHTML = "TEST";
+    customButtonsDiv.style.display = "flex";
+    customButtonsDiv.style.flexDirection = "column";
+    customButtonsDiv.style.gap = "10px";
+    customButtonsDiv.innerHTML = "TEST";
 
     console.log("Custom buttons div created");
   }
