@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name         WPD Poker Enhancement
-// @author       @UnbelievableBro
+// @name         [A POKER]
+// @author       You
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
 // @version      1.2.9
 // @description  https://www.tampermonkey.net/documentation.php
-// @icon         https://watchpeopledie.tv/icon.webp
+// @icon         https://[HOSTNAME]/icon.webp
 // @grant        none
-// @match        https://watchpeopledie.tv/casino/poker/*
+// @match        https://[HOSTNAME]/casino/poker/*
 // @run-at       document-idle
-// @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
-// @updateURL    https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
+// @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript-2/a-poker.user.js
+// @updateURL    https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript-2/a-poker.user.js
 // ==/UserScript==
 
 /*
