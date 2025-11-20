@@ -3,10 +3,10 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.1
+// @version      1.2.2
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
-// @grant        unsafeWindow
+// @grant        none
 // @match        https://watchpeopledie.tv/casino/poker/*
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
@@ -44,6 +44,7 @@
     document.getElementById("poker-help-icon").remove();
     console.log("Removed poker help icon/Wikipedia link");
     unhideButtons();
+    hideDefaultButtons();
 
   }
 
@@ -56,7 +57,13 @@
     document.getElementById("poker-SHOWHAND").removeAttribute("hidden");
     document.getElementById("poker-LEAVE").removeAttribute("hidden");
 
-    console.log("Unhidden poker buttons");
+    console.log("Poker buttons unhidden");
+  }
+
+  function hideDefaultButtons() {
+    document.getElementById("poker-buttons").setAttribute("hidden")
+
+    console.log("Defult buttons hidden")
   }
 
   setInitialGameState();
