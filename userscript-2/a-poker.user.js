@@ -24,102 +24,16 @@ TODO:
 (function () {
   "use strict";
 
-  // Establish current user ID
-  const currentUserId = document.getElementById("vid").value;
-  console.log("Current user ID: " + currentUserId);
-
-  // Get current poker table game state
-  function getGameState() {
-    return document.getElementById("poker-table").getAttribute("data-state");
-  }
-
-  // Parse the game state and update the UI
-  function parseGameState() {
-    const gameState = getGameState();
-    const gameStateObj = JSON.parse(gameState);
-    console.log(gameStateObj);
-  }
-
-  // Observe the poker table for changes
-  const targetElement = document.getElementById("orgy-top-container");
-
-  if (targetElement) {
-    const observer = new MutationObserver(function (mutations) {
-      parseGameState();
-      mirrorDefaultButtons();
-    });
-
-    observer.observe(targetElement, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["data-state"],
-    });
-  }
-
-  // Add styles for disabled buttons
-  const style = document.createElement("style");
-  style.textContent = `
-    .poker-btn[data-disabled="true"] {
-      opacity: 0.5 !important;
-      cursor: not-allowed !important;
-      pointer-events: none !important;
-    }
-    .poker-btn[data-disabled="true"]:hover {
-      opacity: 0.5 !important;
-      transform: none !important;
-      box-shadow: none !important;
-    }
-  `;
-  document.head.appendChild(style);
-
-  function setInitialGameState() {
-    // Delete useless Wikipedia link
-    document.getElementById("poker-help-icon").remove();
-    console.log("Removed poker help icon/Wikipedia link");
-    hideDefaultButtons();
-    createCustomButtonsDiv();
-    mirrorDefaultButtons();
-  }
-
-  // Hide div that contains the default poker buttons
-  function hideDefaultButtons() {
-    document.getElementById("poker-buttons").setAttribute("hidden", "true");
-    console.log("Default buttons hidden");
-  }
-
-  // Create new div for custom poker buttons
-  function createCustomButtonsDiv() {
-    const defaultButtons = document.getElementById("poker-buttons");
-    if (!defaultButtons) return;
-
-    const parentDiv = defaultButtons.parentElement;
-    const customButtonsDiv = document.createElement("div");
-    customButtonsDiv.id = "custom-poker-buttons";
-
-    // Insert in the same position as default buttons (right before it)
-    parentDiv.insertBefore(customButtonsDiv, defaultButtons);
-
-    // Style the new div
-    customButtonsDiv.style.display = "flex";
-    customButtonsDiv.style.flexDirection = "column";
-    customButtonsDiv.style.gap = "0.25em";
-    customButtonsDiv.style.alignItems = "center";
-    customButtonsDiv.style.justifyContent = "center";
-    customButtonsDiv.style.width = "100%";
-    customButtonsDiv.style.height = "100%";
-    customButtonsDiv.style.position = "absolute";
-    customButtonsDiv.style.top = "0";
-    customButtonsDiv.style.left = "0";
-    customButtonsDiv.style.zIndex = "1000";
-    customButtonsDiv.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    customButtonsDiv.style.backdropFilter = "blur(10px)";
-    customButtonsDiv.style.padding = "1em";
-    customButtonsDiv.style.borderRadius = "10px";
-    customButtonsDiv.style.boxShadow = "0 0 10px 0 rgba(0, 0, 0, 0.5)";
-    customButtonsDiv.style.opacity = "0.5";
-    // Button mappings: [displayText, originalButtonId]
-    const buttonMappings = [
+  // ============================================
+  // GLOBAL STATE & CONFIGURATION
+  // ============================================
+  
+  const CONFIG = {
+    currentUserId: null,
+    isInitialized: false,
+    observers: [],
+    lastGameState: null,
+    buttonMappings: [
       ["Check", "poker-CHECK"],
       ["Raise", "poker-RAISE"],
       ["Fold", "poker-FOLD"],
@@ -127,25 +41,125 @@ TODO:
       ["Leave", "poker-LEAVE"],
       ["Unready", "poker-UNREADY"],
       ["Show Hand", "poker-SHOWHAND"],
-    ];
+    ]
+  };
+
+  // ============================================
+  // UTILITY FUNCTIONS
+  // ============================================
+
+  function log(message, data = null) {
+    const timestamp = new Date().toLocaleTimeString();
+    if (data) {
+      console.log(`[Poker ${timestamp}] ${message}`, data);
+    } else {
+      console.log(`[Poker ${timestamp}] ${message}`);
+    }
+  }
+
+  function getGameState() {
+    const pokerTable = document.getElementById("poker-table");
+    if (!pokerTable) return null;
+    
+    const stateAttr = pokerTable.getAttribute("data-state");
+    if (!stateAttr) return null;
+    
+    try {
+      return JSON.parse(stateAttr);
+    } catch (e) {
+      log("Failed to parse game state", e);
+      return null;
+    }
+  }
+
+  function hasGameStateChanged(newState) {
+    if (!newState || !CONFIG.lastGameState) return true;
+    return JSON.stringify(newState) !== JSON.stringify(CONFIG.lastGameState);
+  }
+
+  // ============================================
+  // UI CREATION FUNCTIONS
+  // ============================================
+
+  function injectStyles() {
+    const style = document.createElement("style");
+    style.textContent = `
+      .poker-btn[data-disabled="true"] {
+        opacity: 0.5 !important;
+        cursor: not-allowed !important;
+        pointer-events: none !important;
+      }
+      .poker-btn[data-disabled="true"]:hover {
+        opacity: 0.5 !important;
+        transform: none !important;
+        box-shadow: none !important;
+      }
+      #custom-poker-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25em;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background-color: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        padding: 1em;
+        border-radius: 10px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.5);
+        opacity: 0.5;
+      }
+    `;
+    document.head.appendChild(style);
+    log("Styles injected");
+  }
+
+  function createCustomButtonsUI() {
+    // Hide default buttons
+    const defaultButtons = document.getElementById("poker-buttons");
+    if (!defaultButtons) {
+      log("Default buttons not found, retrying...");
+      return false;
+    }
+    
+    defaultButtons.setAttribute("hidden", "true");
+    log("Default buttons hidden");
+
+    // Check if custom buttons already exist
+    if (document.getElementById("custom-poker-buttons")) {
+      log("Custom buttons already exist");
+      return true;
+    }
+
+    // Create custom buttons container
+    const parentDiv = defaultButtons.parentElement;
+    const customButtonsDiv = document.createElement("div");
+    customButtonsDiv.id = "custom-poker-buttons";
+
+    // Insert in the same position as default buttons
+    parentDiv.insertBefore(customButtonsDiv, defaultButtons);
 
     // Create buttons for each mapping
-    buttonMappings.forEach(([text, originalId]) => {
+    CONFIG.buttonMappings.forEach(([text, originalId]) => {
       const button = document.createElement("button");
       button.textContent = text;
       button.className = "btn btn-primary poker-btn";
       button.setAttribute("data-original-id", originalId);
 
-      // Click handler: trigger the original button (only if not disabled)
+      // Click handler: trigger the original button
       button.addEventListener("click", function (e) {
-        // Prevent action if button is disabled
-        if (button.hasAttribute("data-disabled")) {
+        if (button.getAttribute("data-disabled") === "true") {
           e.preventDefault();
           e.stopPropagation();
           return false;
         }
         const originalButton = document.getElementById(originalId);
         if (originalButton) {
+          log(`Custom button clicked: ${text}`);
           originalButton.click();
         }
       });
@@ -153,66 +167,190 @@ TODO:
       customButtonsDiv.appendChild(button);
     });
 
-    console.log("Custom buttons div created");
+    log("Custom buttons created");
+    return true;
   }
 
-  // Disable buttons that cannot be used in the current game state
-  // Use the hidden attribute of the original buttons to disable new buttons
-  function mirrorDefaultButtons() {
+  function removeHelpIcon() {
+    const helpIcon = document.getElementById("poker-help-icon");
+    if (helpIcon) {
+      helpIcon.remove();
+      log("Removed poker help icon");
+    }
+  }
+
+  // ============================================
+  // UPDATE FUNCTIONS
+  // ============================================
+
+  function updateButtonStates() {
     const defaultButtons = document.getElementById("poker-buttons");
-    if (!defaultButtons) return;
-
     const customButtons = document.getElementById("custom-poker-buttons");
-    if (!customButtons) return;
+    
+    if (!defaultButtons || !customButtons) {
+      log("Buttons not ready for update");
+      return;
+    }
 
-    // Find the default poker button elements
-    const defaultButtonElems = Array.from(
-      defaultButtons.querySelectorAll("button")
-    );
+    // Mirror the state of default buttons to custom buttons
+    const defaultButtonElems = Array.from(defaultButtons.querySelectorAll("button"));
+    
     defaultButtonElems.forEach((defaultBtn) => {
       const customBtn = customButtons.querySelector(
         `button[data-original-id="${defaultBtn.id}"]`
       );
+      
       if (customBtn) {
-        const isDisabled =
+        const isDisabled = 
           defaultBtn.hasAttribute("hidden") ||
           defaultBtn.disabled ||
           defaultBtn.style.display === "none";
 
         if (isDisabled) {
-          // Mark as disabled and apply styles
           customBtn.setAttribute("data-disabled", "true");
-          customBtn.style.opacity = "0.5";
-          customBtn.style.cursor = "not-allowed";
-          customBtn.style.pointerEvents = "none";
-          // Remove hover effects by overriding any hover styles
-          customBtn.style.setProperty("--hover-opacity", "1", "important");
         } else {
-          // Enable button
           customBtn.removeAttribute("data-disabled");
-          customBtn.style.opacity = "";
-          customBtn.style.cursor = "";
-          customBtn.style.pointerEvents = "";
-          customBtn.style.removeProperty("--hover-opacity");
         }
       }
     });
+    
+    log("Button states updated");
   }
 
-  setInitialGameState();
-
-  // Observe the default buttons container for changes (after initialization)
-  const defaultButtonsContainer = document.getElementById("poker-buttons");
-  if (defaultButtonsContainer) {
-    const buttonObserver = new MutationObserver(function () {
-      mirrorDefaultButtons();
+  function processGameState(gameState) {
+    if (!gameState) return;
+    
+    // Store the current game state
+    CONFIG.lastGameState = gameState;
+    
+    // Log important game state information
+    log("Game state processed", {
+      stage: gameState.stage,
+      currentPlayer: gameState.current_player,
+      pot: gameState.pot,
+      players: gameState.players?.length
     });
-
-    buttonObserver.observe(defaultButtonsContainer, {
-      childList: true,
-      subtree: true,
-      attributes: true,
-      attributeFilter: ["hidden", "disabled", "style"],
-    });
+    
+    // TODO: Add game state specific logic here
+    // - Check if it's user's turn
+    // - Update button text (Bet vs Raise)
+    // - Play sound if it's user's turn
+    // - Handle pre-move actions
   }
+
+  // ============================================
+  // MAIN UPDATE FUNCTION
+  // ============================================
+
+  function handleUpdate(source = "unknown") {
+    log(`Update triggered from: ${source}`);
+    
+    // Get current game state
+    const gameState = getGameState();
+    
+    // Process game state if it changed
+    if (hasGameStateChanged(gameState)) {
+      processGameState(gameState);
+    }
+    
+    // Always update button states (they might change without game state changing)
+    updateButtonStates();
+  }
+
+  // ============================================
+  // INITIALIZATION
+  // ============================================
+
+  function setupObservers() {
+    // Main observer for game state changes
+    const targetElement = document.getElementById("orgy-top-container");
+    if (targetElement) {
+      const mainObserver = new MutationObserver(() => {
+        handleUpdate("main-observer");
+      });
+
+      mainObserver.observe(targetElement, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["data-state"],
+      });
+      
+      CONFIG.observers.push(mainObserver);
+      log("Main observer setup complete");
+    }
+
+    // Observer for default button changes
+    const defaultButtonsContainer = document.getElementById("poker-buttons");
+    if (defaultButtonsContainer) {
+      const buttonObserver = new MutationObserver(() => {
+        handleUpdate("button-observer");
+      });
+
+      buttonObserver.observe(defaultButtonsContainer, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["hidden", "disabled", "style"],
+      });
+      
+      CONFIG.observers.push(buttonObserver);
+      log("Button observer setup complete");
+    }
+  }
+
+  function initialize() {
+    if (CONFIG.isInitialized) {
+      log("Already initialized, skipping...");
+      return;
+    }
+
+    log("Starting initialization...");
+    
+    // Get current user ID
+    const vidElement = document.getElementById("vid");
+    if (vidElement) {
+      CONFIG.currentUserId = vidElement.value;
+      log(`Current user ID: ${CONFIG.currentUserId}`);
+    }
+    
+    // Inject styles
+    injectStyles();
+    
+    // Remove help icon
+    removeHelpIcon();
+    
+    // Create custom UI
+    const uiCreated = createCustomButtonsUI();
+    if (!uiCreated) {
+      log("Failed to create UI, retrying in 500ms...");
+      setTimeout(initialize, 500);
+      return;
+    }
+    
+    // Setup observers
+    setupObservers();
+    
+    // Do initial update
+    handleUpdate("initialization");
+    
+    CONFIG.isInitialized = true;
+    log("Initialization complete!");
+  }
+
+  // ============================================
+  // ENTRY POINT
+  // ============================================
+
+  // Wait for DOM to be ready if needed
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize);
+  } else {
+    // Small delay to ensure everything is loaded
+    setTimeout(initialize, 100);
+  }
+
+  // Expose config for debugging
+  window.pokerScriptConfig = CONFIG;
+  
 })();
