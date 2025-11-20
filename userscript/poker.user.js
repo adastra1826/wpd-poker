@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.8
+// @version      1.2.9
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -12,6 +12,14 @@
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
 // @updateURL    https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript/poker.user.js
 // ==/UserScript==
+
+/*
+TODO:
+- implement game state tracking
+- implement pre-move actions (check, call, raise, fold, allin)
+- implement bet vs raise text
+- implement custom sound when it is the user's turn
+*/
 
 (function () {
   "use strict";
@@ -93,6 +101,23 @@
     parentDiv.insertBefore(customButtonsDiv, defaultButtons);
 
     // Style the new div
+    customButtonsDiv.style.display = "flex";
+    customButtonsDiv.style.flexDirection = "column";
+    customButtonsDiv.style.gap = "0.25em";
+    customButtonsDiv.style.alignItems = "center";
+    customButtonsDiv.style.justifyContent = "center";
+    customButtonsDiv.style.width = "100%";
+    customButtonsDiv.style.height = "100%";
+    customButtonsDiv.style.position = "absolute";
+    customButtonsDiv.style.top = "0";
+    customButtonsDiv.style.left = "0";
+    customButtonsDiv.style.zIndex = "1000";
+    customButtonsDiv.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    customButtonsDiv.style.backdropFilter = "blur(10px)";
+    customButtonsDiv.style.padding = "1em";
+    customButtonsDiv.style.borderRadius = "10px";
+    customButtonsDiv.style.boxShadow = "0 0 10px 0 rgba(0, 0, 0, 0.5)";
+    customButtonsDiv.style.opacity = "0.5";
     // Button mappings: [displayText, originalButtonId]
     const buttonMappings = [
       ["Check", "poker-CHECK"],
