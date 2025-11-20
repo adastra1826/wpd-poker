@@ -5,9 +5,9 @@
 // @copyright    CC0
 // @version      1.2.9
 // @description  https://www.tampermonkey.net/documentation.php
-// @icon         https://[HOSTNAME]/icon.webp
+// @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
-// @match        https://[HOSTNAME]/casino/poker/*
+// @match        https://watchpeopledie.tv/casino/poker/*
 // @run-at       document-idle
 // @downloadURL  https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript-2/b-poker.user.js
 // @updateURL    https://raw.githubusercontent.com/adastra1826/wpd-poker/main/userscript-2/b-poker.user.js
