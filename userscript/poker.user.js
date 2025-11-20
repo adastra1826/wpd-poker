@@ -34,10 +34,11 @@
 
   // Observe the poker table for changes
   const targetElement = document.getElementById("orgy-top-container");
-  
+
   if (targetElement) {
     const observer = new MutationObserver(function (mutations) {
       parseGameState();
+      mirrorDefaultButtons();
     });
 
     observer.observe(targetElement, {
@@ -48,12 +49,29 @@
     });
   }
 
+  // Add styles for disabled buttons
+  const style = document.createElement("style");
+  style.textContent = `
+    .poker-btn[data-disabled="true"] {
+      opacity: 0.5 !important;
+      cursor: not-allowed !important;
+      pointer-events: none !important;
+    }
+    .poker-btn[data-disabled="true"]:hover {
+      opacity: 0.5 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  `;
+  document.head.appendChild(style);
+
   function setInitialGameState() {
     // Delete useless Wikipedia link
     document.getElementById("poker-help-icon").remove();
     console.log("Removed poker help icon/Wikipedia link");
     hideDefaultButtons();
     createCustomButtonsDiv();
+    mirrorDefaultButtons();
   }
 
   // Hide div that contains the default poker buttons
@@ -66,11 +84,11 @@
   function createCustomButtonsDiv() {
     const defaultButtons = document.getElementById("poker-buttons");
     if (!defaultButtons) return;
-    
+
     const parentDiv = defaultButtons.parentElement;
     const customButtonsDiv = document.createElement("div");
     customButtonsDiv.id = "custom-poker-buttons";
-    
+
     // Insert in the same position as default buttons (right before it)
     parentDiv.insertBefore(customButtonsDiv, defaultButtons);
 
@@ -83,7 +101,7 @@
       ["Start Game", "poker-STARTGAME"],
       ["Leave", "poker-LEAVE"],
       ["Unready", "poker-UNREADY"],
-      ["Show Hand", "poker-SHOWHAND"]
+      ["Show Hand", "poker-SHOWHAND"],
     ];
 
     // Create buttons for each mapping
@@ -91,20 +109,28 @@
       const button = document.createElement("button");
       button.textContent = text;
       button.className = "btn btn-primary poker-btn";
-      
-      // Click handler: trigger the original button
-      button.addEventListener("click", function() {
+      button.setAttribute("data-original-id", originalId);
+
+      // Click handler: trigger the original button (only if not disabled)
+      button.addEventListener("click", function (e) {
+        // Prevent action if button is disabled
+        if (button.hasAttribute("data-disabled")) {
+          e.preventDefault();
+          e.stopPropagation();
+          return false;
+        }
         const originalButton = document.getElementById(originalId);
         if (originalButton) {
           originalButton.click();
         }
       });
-      
+
       customButtonsDiv.appendChild(button);
     });
 
     console.log("Custom buttons div created");
   }
+
   // Disable buttons that cannot be used in the current game state
   // Use the hidden attribute of the original buttons to disable new buttons
   function mirrorDefaultButtons() {
@@ -115,20 +141,53 @@
     if (!customButtons) return;
 
     // Find the default poker button elements
-    const defaultButtonElems = Array.from(defaultButtons.querySelectorAll("button"));
-    defaultButtonElems.forEach(defaultBtn => {
-      const customBtn = customButtons.querySelector(`button[data-original-id="${defaultBtn.id}"]`);
+    const defaultButtonElems = Array.from(
+      defaultButtons.querySelectorAll("button")
+    );
+    defaultButtonElems.forEach((defaultBtn) => {
+      const customBtn = customButtons.querySelector(
+        `button[data-original-id="${defaultBtn.id}"]`
+      );
       if (customBtn) {
-        if (defaultBtn.hasAttribute("hidden") || defaultBtn.disabled || defaultBtn.style.display === "none") {
-          customBtn.disabled = true;
-          customBtn.classList.add("poker-btn-disabled");
+        const isDisabled =
+          defaultBtn.hasAttribute("hidden") ||
+          defaultBtn.disabled ||
+          defaultBtn.style.display === "none";
+
+        if (isDisabled) {
+          // Mark as disabled and apply styles
+          customBtn.setAttribute("data-disabled", "true");
+          customBtn.style.opacity = "0.5";
+          customBtn.style.cursor = "not-allowed";
+          customBtn.style.pointerEvents = "none";
+          // Remove hover effects by overriding any hover styles
+          customBtn.style.setProperty("--hover-opacity", "1", "important");
         } else {
-          customBtn.disabled = false;
-          customBtn.classList.remove("poker-btn-disabled");
+          // Enable button
+          customBtn.removeAttribute("data-disabled");
+          customBtn.style.opacity = "";
+          customBtn.style.cursor = "";
+          customBtn.style.pointerEvents = "";
+          customBtn.style.removeProperty("--hover-opacity");
         }
       }
     });
   }
 
   setInitialGameState();
+
+  // Observe the default buttons container for changes (after initialization)
+  const defaultButtonsContainer = document.getElementById("poker-buttons");
+  if (defaultButtonsContainer) {
+    const buttonObserver = new MutationObserver(function () {
+      mirrorDefaultButtons();
+    });
+
+    buttonObserver.observe(defaultButtonsContainer, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["hidden", "disabled", "style"],
+    });
+  }
 })();
