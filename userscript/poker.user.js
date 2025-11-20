@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.6
+// @version      1.2.7
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -104,6 +104,30 @@
     });
 
     console.log("Custom buttons div created");
+  }
+  // Disable buttons that cannot be used in the current game state
+  // Use the hidden attribute of the original buttons to disable new buttons
+  function mirrorDefaultButtons() {
+    const defaultButtons = document.getElementById("poker-buttons");
+    if (!defaultButtons) return;
+
+    const customButtons = document.getElementById("custom-poker-buttons");
+    if (!customButtons) return;
+
+    // Find the default poker button elements
+    const defaultButtonElems = Array.from(defaultButtons.querySelectorAll("button"));
+    defaultButtonElems.forEach(defaultBtn => {
+      const customBtn = customButtons.querySelector(`button[data-original-id="${defaultBtn.id}"]`);
+      if (customBtn) {
+        if (defaultBtn.hasAttribute("hidden") || defaultBtn.disabled || defaultBtn.style.display === "none") {
+          customBtn.disabled = true;
+          customBtn.classList.add("poker-btn-disabled");
+        } else {
+          customBtn.disabled = false;
+          customBtn.classList.remove("poker-btn-disabled");
+        }
+      }
+    });
   }
 
   setInitialGameState();
