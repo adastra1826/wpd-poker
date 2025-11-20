@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.2
+// @version      1.2.3
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -61,9 +61,9 @@
   }
 
   function hideDefaultButtons() {
-    document.getElementById("poker-buttons").setAttribute("hidden")
+    document.getElementById("poker-buttons").setAttribute("hidden", "true");
 
-    console.log("Defult buttons hidden")
+    console.log("Default buttons hidden");
   }
 
   setInitialGameState();
