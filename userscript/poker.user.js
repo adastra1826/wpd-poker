@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.7
+// @version      1.2.8
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
