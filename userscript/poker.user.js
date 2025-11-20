@@ -3,7 +3,7 @@
 // @author       @UnbelievableBro
 // @namespace    http://tampermonkey.net/
 // @copyright    CC0
-// @version      1.2.5
+// @version      1.2.6
 // @description  https://www.tampermonkey.net/documentation.php
 // @icon         https://watchpeopledie.tv/icon.webp
 // @grant        none
@@ -75,10 +75,33 @@
     parentDiv.insertBefore(customButtonsDiv, defaultButtons);
 
     // Style the new div
-    customButtonsDiv.style.display = "flex";
-    customButtonsDiv.style.flexDirection = "column";
-    customButtonsDiv.style.gap = "10px";
-    customButtonsDiv.innerHTML = "TEST";
+    // Button mappings: [displayText, originalButtonId]
+    const buttonMappings = [
+      ["Check", "poker-CHECK"],
+      ["Raise", "poker-RAISE"],
+      ["Fold", "poker-FOLD"],
+      ["Start Game", "poker-STARTGAME"],
+      ["Leave", "poker-LEAVE"],
+      ["Unready", "poker-UNREADY"],
+      ["Show Hand", "poker-SHOWHAND"]
+    ];
+
+    // Create buttons for each mapping
+    buttonMappings.forEach(([text, originalId]) => {
+      const button = document.createElement("button");
+      button.textContent = text;
+      button.className = "btn btn-primary poker-btn";
+      
+      // Click handler: trigger the original button
+      button.addEventListener("click", function() {
+        const originalButton = document.getElementById(originalId);
+        if (originalButton) {
+          originalButton.click();
+        }
+      });
+      
+      customButtonsDiv.appendChild(button);
+    });
 
     console.log("Custom buttons div created");
   }
